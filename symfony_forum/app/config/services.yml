@@ -1,0 +1,13 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    app.forum:
+        class: AppBundle\Business\Forum
+        arguments:
+            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:User')"
+            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Subject')"
+            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Comment')"
+            - "@session"
