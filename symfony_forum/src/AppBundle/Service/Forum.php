@@ -6,7 +6,7 @@
  * Time: 16:09
  */
 
-namespace AppBundle\Business;
+namespace AppBundle\Service;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Subject;
@@ -64,7 +64,7 @@ class Forum
 
     public function getSubjects()
     {
-        if ($this->getCurrentUser() !== null){
+        if ($this->getUser() !== null){
             return $this->currentUser->getSubjects();
         }
         return [];

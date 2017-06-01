@@ -1,35 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Subject</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ subject.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ subject.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ subject.content }}</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <div>
+        <h3>{{ subject.title }}</h3>
+        <p><h4>par {{ subject.user.username }}</h4></p>
+    </div>
+    <div>
+        {{ subject.content }}
+    </div>
+    <h4>Commentaires</h4>
+    <hr>
+    {% for comment in subject.comments %}
+        <div>
+            <p>De : <b>{{ comment.user.username }}</b></p>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% endfor %}
     <ul>
         <li>
-            <a href="{{ path('subject_index') }}">Back to the list</a>
+            <a href="{{ path('comment_new', { 'subject': subject.id }) }}">Commenter</a>
         </li>
         <li>
-            <a href="{{ path('subject_edit', { 'id': subject.id }) }}">Edit</a>
+            <a href="{{ path('homepage') }}">Back to the list</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
     </ul>

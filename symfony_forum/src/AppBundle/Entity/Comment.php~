@@ -34,6 +34,11 @@ class Comment
     private $subject;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return int

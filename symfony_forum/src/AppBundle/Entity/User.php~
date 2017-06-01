@@ -32,7 +32,7 @@ class User implements UserInterface, Serializable
 
     /**
      * @var string
-     * @ORM\Column(name="password", type="string", length=50)
+     * @ORM\Column(name="password", type="string", length=100)
      */
     private $password;
 
@@ -49,6 +49,12 @@ class User implements UserInterface, Serializable
     private $subjects;
 
     /**
+     * @var
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
+
+    /**
      * @var array
      * @ORM\Column(name="roles", type="array")
      */
@@ -56,7 +62,7 @@ class User implements UserInterface, Serializable
 
     /**
      * @var string
-     * @ORM\Column(name="salt", type="string", length=100)
+     * @ORM\Column(name="salt", type="string", length=100, nullable=true)
      */
     private $salt;
     /**
@@ -241,4 +247,19 @@ class User implements UserInterface, Serializable
             // $this->salt
             ) = unserialize($serialized);
     }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
 }

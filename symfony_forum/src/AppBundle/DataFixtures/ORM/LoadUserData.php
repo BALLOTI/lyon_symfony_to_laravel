@@ -20,6 +20,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
 
+    const TOTAL_USER = 2;
+
     /** @var Container  */
     private $container;
 
@@ -39,6 +41,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setRoles(['ROLE_USER']);
         $user->setPassword($encoded);
         $manager->persist($user);
+        $this->setReference("user_1", $user);
 
         $user = new User();
         $encoded = $encoder->encodePassword($user, $plainPassword);
@@ -47,6 +50,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword($encoded);
         $manager->persist($user);
+        $this->setReference("user_2", $user);
 
         $manager->flush();
 

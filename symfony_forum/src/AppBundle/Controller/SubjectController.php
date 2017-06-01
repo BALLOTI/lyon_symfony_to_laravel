@@ -15,23 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class SubjectController extends Controller
 {
     /**
-     * Lists all subject entities.
-     *
-     * @Route("/", name="subject_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $subjects = $em->getRepository('AppBundle:Subject')->findAll();
-
-        return $this->render('subject/index.html.twig', array(
-            'subjects' => $subjects,
-        ));
-    }
-
-    /**
      * Creates a new subject entity.
      *
      * @Route("/new", name="subject_new")
@@ -40,11 +23,14 @@ class SubjectController extends Controller
     public function newAction(Request $request)
     {
         $subject = new Subject();
+        $forum = $this->get("app.forum");
         $form = $this->createForm('AppBundle\Form\SubjectType', $subject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $forum->getUser();
             $em = $this->getDoctrine()->getManager();
+            $subject->setUser($user);
             $em->persist($subject);
             $em->flush();
 
@@ -60,7 +46,7 @@ class SubjectController extends Controller
     /**
      * Finds and displays a subject entity.
      *
-     * @Route("/{id}", name="subject_show")
+     * @Route("/{subject}", name="subject_show")
      * @Method("GET")
      */
     public function showAction(Subject $subject)
@@ -69,31 +55,6 @@ class SubjectController extends Controller
 
         return $this->render('subject/show.html.twig', array(
             'subject' => $subject,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing subject entity.
-     *
-     * @Route("/{id}/edit", name="subject_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Subject $subject)
-    {
-        $deleteForm = $this->createDeleteForm($subject);
-        $editForm = $this->createForm('AppBundle\Form\SubjectType', $subject);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('subject_edit', array('id' => $subject->getId()));
-        }
-
-        return $this->render('subject/edit.html.twig', array(
-            'subject' => $subject,
-            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
