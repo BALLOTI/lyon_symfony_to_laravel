@@ -5,3 +5,7 @@ body {
 .topMarge {
     padding-top: 50px;
 }
+
+.subjectAuthor {
+    font-size: large;
+}
