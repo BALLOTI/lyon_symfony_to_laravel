@@ -10,12 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{subject}", name="homepage")
      */
-    public function indexAction()
+    public function indexAction($subject = null)
     {
         return $this->render('default/index.html.twig', [
             "data" => $this->get("app.forum")->getAllSubjects(),
+            "currentSubject" => $subject
         ]);
     }
 

@@ -9,3 +9,7 @@ body {
 .subjectAuthor {
     font-size: large;
 }
+
+.subjectContent {
+    font-size: 110%;
+}

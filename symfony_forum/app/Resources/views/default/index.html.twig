@@ -4,16 +4,29 @@
     <ul class="collapsible" data-collapsible="accordion">
         {% for subject in data %}
             <li>
-                <div class="collapsible-header">
+                <div class="collapsible-header {% if currentSubject is not null %}active{% endif %}">
                     {% set total = subject.comments | length %}
                     <span class="badge">{{ total }} comment{{ total > 1 ? 's' : '' }}</span>
-                    <a class="subjectAuthor" href="{{ path('subject_show', {'subject': subject.id }) }}">
+                    <span class="subjectAuthor">
                         {{ subject.title }}
-                    </a>
+                    </span>
                     par {{ subject.user.username | capitalize }}
                 </div>
-                {% if (subject.comments | length) > 0 %}
-                    <div class="collapsible-body blue lighten-5">
+                <div class="collapsible-body blue lighten-5">
+                    <div class="row">
+                        <div class="col s12 subjectContent">
+                            {{ subject.content }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="center-align">
+                            <a class="btn-floating btn-large waves-effect waves-light red lighten-2"
+                               href="{{ path('comment_new', {"subject": subject.id}) }}">
+                                <i class="material-icons">add</i>
+                            </a>
+                        </div>
+                    </div>
+                    {% if (subject.comments | length) > 0 %}
                         {% for comment in subject.comments %}
                             <div class="row">
                                 <div class="col s12">
@@ -26,8 +39,8 @@
                                 </div>
                             </div>
                         {% endfor %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </li>
         {% endfor %}
     </ul>

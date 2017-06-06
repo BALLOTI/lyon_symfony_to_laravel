@@ -10,4 +10,4 @@ services:
             - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:User')"
             - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Subject')"
             - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Comment')"
-            - "@session"
+            - "@security.token_storage"

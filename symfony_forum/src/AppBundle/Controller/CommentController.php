@@ -40,7 +40,7 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('subject_show', array('subject' => $subject->getId()));
+            return $this->redirectToRoute('homepage', array('subject' => $subject->getId()));
         }
 
         return $this->render('comment/new.html.twig', array(

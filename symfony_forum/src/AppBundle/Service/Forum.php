@@ -14,7 +14,7 @@ use AppBundle\Entity\User;
 use AppBundle\Repository\CommentRepository;
 use AppBundle\Repository\SubjectRepository;
 use AppBundle\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class Forum
 {
@@ -26,9 +26,6 @@ class Forum
 
     /** @var  CommentRepository */
     private $commentRepository;
-
-    /** @var  Session */
-    private $session;
 
     /** @var  User */
     private $currentUser;
@@ -44,17 +41,18 @@ class Forum
      * @param UserRepository $userRepository
      * @param SubjectRepository $subjectRepository
      * @param CommentRepository $commentRepository
-     * @param Session $session
+     * @param TokenStorageInterface $security
+     * @internal param Session $session
      */
     public function __construct(UserRepository $userRepository,
                                 SubjectRepository $subjectRepository,
                                 CommentRepository $commentRepository,
-                                Session $session)
+                                TokenStorageInterface $security)
     {
         $this->userRepository       = $userRepository;
         $this->subjectRepository    = $subjectRepository;
         $this->commentRepository    = $commentRepository;
-        $this->session              = $session;
+        $this->security             = $security;
     }
 
     public function getAllSubjects()
@@ -80,7 +78,7 @@ class Forum
 
     public function getUser(){
         if (!isset($this->currentUser)) {
-            $this->currentUser = $this->userRepository->find($this->session->get("user")->id);
+            $this->currentUser = $this->security->getToken()->getUser();
         }
         return $this->currentUser;
     }
