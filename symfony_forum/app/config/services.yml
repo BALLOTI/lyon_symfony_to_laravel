@@ -3,11 +3,3 @@
 parameters:
     #parameter_name: value
 
-services:
-    app.forum:
-        class: AppBundle\Service\Forum
-        arguments:
-            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:User')"
-            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Subject')"
-            - "@=service('doctrine.orm.entity_manager').getRepository('AppBundle:Comment')"
-            - "@security.token_storage"

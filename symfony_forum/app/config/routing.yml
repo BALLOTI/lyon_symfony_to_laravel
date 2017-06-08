@@ -1,6 +1,7 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+forum:
+    resource: "@ForumBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 logout:
     path: /logout

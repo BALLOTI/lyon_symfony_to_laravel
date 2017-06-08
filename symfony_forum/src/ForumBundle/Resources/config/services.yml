@@ -1,0 +1,8 @@
+services:
+    forum.forum:
+        class: ForumBundle\Service\Forum
+        arguments:
+            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:User')"
+            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:Subject')"
+            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:Comment')"
+            - "@security.token_storage"
