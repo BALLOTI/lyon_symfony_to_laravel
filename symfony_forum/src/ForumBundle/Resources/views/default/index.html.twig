@@ -46,7 +46,7 @@
                                         {% if app.user.username == comment.user.username %}
                                             <div class="card-action">
                                                 <a class="btn-floating btn-medium waves-effect waves-light red lighten-2"
-                                                   href="{{ path('subject_delete', {"id": subject.id}) }}">
+                                                   href="{{ path('comment_delete', {"id": comment.id}) }}">
                                                     <i class="material-icons">delete</i>
                                                 </a>
                                             </div>

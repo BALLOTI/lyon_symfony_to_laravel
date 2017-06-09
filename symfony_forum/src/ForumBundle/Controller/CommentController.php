@@ -64,7 +64,7 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
             $em->flush();
-            return $this->redirectToRoute('homepage', array("subject", $comment->getSubject()->getId()));
+            return $this->redirectToRoute('homepage', array("subject" => $comment->getSubject()->getId()));
         }
         throw new AccessDeniedException("Accés refusé !");
     }

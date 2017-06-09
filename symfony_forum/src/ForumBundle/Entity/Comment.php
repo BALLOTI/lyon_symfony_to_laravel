@@ -29,8 +29,7 @@ class Comment
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Subject", inversedBy="comments" )
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Subject", inversedBy="comments")
      */
     private $subject;
 
