@@ -7,6 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Changes Symfony
+
+Add Voter for your delete action and check permission in another way that       if ($this->getUser()->getId() == $comment->getUser()->getId()) {
+
+http://symfony.com/doc/current/security/voters.html
+
+https://github.com/WildCodeSchool/lyon_symfony_to_laravel/blob/master/symfony_forum/src/ForumBundle/Controller/CommentController.php
+
+## Repository Github 
+https://github.com/WildCodeSchool/lyon_symfony_to_laravel
+
+## Doc CDC
+https://docs.google.com/document/d/1ry1Df-NY7U_UNep300_NLDEvF-1BnPPvEtpQ0RySNwc/edit
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
