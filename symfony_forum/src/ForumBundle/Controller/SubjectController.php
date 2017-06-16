@@ -36,7 +36,10 @@ class SubjectController extends Controller
             $subject->setUser($user);
             $em->persist($subject);
             $em->flush();
-
+            $this->addFlash(
+                'notice',
+                'Votre sujet à bien été ajouté.'
+            );
             return $this->redirectToRoute('homepage', array('subject' => $subject->getId()));
         }
 
@@ -60,6 +63,10 @@ class SubjectController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($subject);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Votre sujet à bien été supprimé.'
+            );
             return $this->redirectToRoute('homepage');
         }
         throw new AccessDeniedException("Accés refusé !");

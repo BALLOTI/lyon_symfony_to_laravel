@@ -39,7 +39,10 @@ class CommentController extends Controller
             $comment->setUser($user);
             $em->persist($comment);
             $em->flush();
-
+            $this->addFlash(
+                'notice',
+                'Votre commentaire à bien été ajouté.'
+            );
             return $this->redirectToRoute('homepage', array('subject' => $subject->getId()));
         }
 
@@ -64,6 +67,10 @@ class CommentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($comment);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Votre commentaire à bien été supprimé.'
+            );
             return $this->redirectToRoute('homepage', array("subject" => $comment->getSubject()->getId()));
         }
         throw new AccessDeniedException("Accés refusé !");
