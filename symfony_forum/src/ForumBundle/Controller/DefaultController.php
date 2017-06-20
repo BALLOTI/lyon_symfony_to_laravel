@@ -17,7 +17,7 @@ class DefaultController extends Controller
     public function indexAction($subject = null)
     {
         return $this->render('@Forum/default/index.html.twig', [
-            "data" => $this->get("forum.forum")->getAllSubjects(),
+            "data" => $this->get('doctrine')->getRepository('ForumBundle:Subject')->findAll(),
             "currentSubject" => $subject
         ]);
     }

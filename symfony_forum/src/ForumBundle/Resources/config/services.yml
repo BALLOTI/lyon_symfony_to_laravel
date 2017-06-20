@@ -1,8 +1,9 @@
 services:
-    forum.forum:
-        class: ForumBundle\Service\Forum
-        arguments:
-            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:User')"
-            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:Subject')"
-            - "@=service('doctrine.orm.entity_manager').getRepository('ForumBundle:Comment')"
-            - "@security.token_storage"
+    forum.subject.voter:
+        class: ForumBundle\Security\SubjectVoter
+        tags:
+            - { name: security.voter }
+    forum.comment.voter:
+        class: ForumBundle\Security\CommentVoter
+        tags:
+            - { name: security.voter }
