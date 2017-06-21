@@ -2,6 +2,10 @@ body {
     background-color: #cecece;
 }
 
+input[type="text"] {
+    font-size: 120%;
+}
+
 .topMarge {
     padding-top: 50px;
 }
@@ -12,4 +16,5 @@ body {
 
 .subjectContent {
     font-size: 110%;
+    height: 150px;
 }

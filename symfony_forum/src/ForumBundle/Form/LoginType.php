@@ -32,7 +32,12 @@ class LoginType extends AbstractType
                         "class" => "white-text",
                     ]
                 ])
-                ->add('submit', SubmitType::class, ["label" => "Se connecter"]);
+                ->add('submit', SubmitType::class, [
+                    "label" => "Se connecter",
+                    "attr" => [
+                        "class" => "btn waves-effect waves-light"
+                    ]
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
