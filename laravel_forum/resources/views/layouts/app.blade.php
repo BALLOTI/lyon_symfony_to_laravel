@@ -29,7 +29,7 @@
 
         <nav>
             <div class="nav-wrapper">
-                @if (Auth::check())<a href="#" class="brand-logo right"> {{ Auth::user()->name }}</a>@endif
+                @if (Auth::check())<a href="#" class="brand-logo right">Hello {{ Auth::user()->name }}</a>@endif
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
                     <li><a href="/">Home</a></li>
 
@@ -58,11 +58,17 @@
 
     <div class="container">
 
+        @if (Session::has('message'))
+            <div class="card green">
+                <div class="card-content">
+                    {!! session('message') !!}
+                </div>
+            </div>
+        @endif
+
         @yield('content')
 
-
     </div>
-
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>

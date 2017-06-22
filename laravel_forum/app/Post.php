@@ -8,4 +8,11 @@ class Post extends Model
 {
     protected $table = 'post';
 
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+
 }
