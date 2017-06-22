@@ -1,16 +1,21 @@
 {% extends '@Forum/base.html.twig' %}
 
 {% block body %}
-    <h1>Nouveau sujet</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('homepage') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="row topMarge">
+        <div class="col s12">
+            <div class="card col s6 offset-s3 blue darken-2">
+                <div class="card-content white-text">
+                    <span class="card-title">Nouveau sujet</span>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="card-action center-align">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Envoyer
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

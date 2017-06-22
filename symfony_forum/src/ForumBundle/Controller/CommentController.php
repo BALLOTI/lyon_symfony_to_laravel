@@ -4,10 +4,10 @@ namespace ForumBundle\Controller;
 
 use ForumBundle\Entity\Comment;
 use ForumBundle\Entity\Subject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Comment controller.
@@ -33,13 +33,16 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->get("forum.forum")->getUser();
+            $user = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $comment->setSubject($subject);
             $comment->setUser($user);
             $em->persist($comment);
             $em->flush();
-
+            $this->addFlash(
+                'notice',
+                'Votre commentaire à bien été ajouté.'
+            );
             return $this->redirectToRoute('homepage', array('subject' => $subject->getId()));
         }
 
@@ -57,15 +60,17 @@ class CommentController extends Controller
      * @Method({"DELETE", "GET"})
      * @param Comment $comment
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Security("is_granted('delete', comment)")
      */
     public function deleteAction(Comment $comment)
     {
-        if ($this->getUser()->getId() == $comment->getUser()->getId()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($comment);
-            $em->flush();
-            return $this->redirectToRoute('homepage', array("subject" => $comment->getSubject()->getId()));
-        }
-        throw new AccessDeniedException("Accés refusé !");
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($comment);
+        $em->flush();
+        $this->addFlash(
+            'notice',
+            'Votre commentaire à bien été supprimé.'
+        );
+        return $this->redirectToRoute('homepage', array("subject" => $comment->getSubject()->getId()));
     }
 }

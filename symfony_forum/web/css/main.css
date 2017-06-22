@@ -1,5 +1,9 @@
 body {
-    background-color: lightskyblue;
+    background-color: #cecece;
+}
+
+input[type="text"] {
+    font-size: 120%;
 }
 
 .topMarge {
@@ -12,4 +16,5 @@ body {
 
 .subjectContent {
     font-size: 110%;
+    height: 150px;
 }

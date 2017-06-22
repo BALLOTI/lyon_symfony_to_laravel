@@ -3,11 +3,11 @@
 namespace ForumBundle\Controller;
 
 use ForumBundle\Entity\Subject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Subject controller.
@@ -31,12 +31,15 @@ class SubjectController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user =  $this->get("forum.forum")->getUser();
+            $user =  $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $subject->setUser($user);
             $em->persist($subject);
             $em->flush();
-
+            $this->addFlash(
+                'notice',
+                'Votre sujet à bien été ajouté.'
+            );
             return $this->redirectToRoute('homepage', array('subject' => $subject->getId()));
         }
 
@@ -47,21 +50,23 @@ class SubjectController extends Controller
     }
 
     /**
-     * Deletes a subject entity.
+     * Delete a subject entity.
      *
      * @Route("/delete/{id}", name="subject_delete")
      * @Method({"GET", "DELETE"})
      * @param Subject $subject
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Security("is_granted('delete', subject)")
      */
     public function deleteAction(Subject $subject)
     {
-        if ($this->getUser()->getId() == $subject->getUser()->getId()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($subject);
-            $em->flush();
-            return $this->redirectToRoute('homepage');
-        }
-        throw new AccessDeniedException("Accés refusé !");
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($subject);
+        $em->flush();
+        $this->addFlash(
+            'notice',
+            'Votre sujet à bien été supprimé.'
+        );
+        return $this->redirectToRoute('homepage');
     }
 }

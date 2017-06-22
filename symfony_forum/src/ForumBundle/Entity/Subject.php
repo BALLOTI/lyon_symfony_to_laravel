@@ -3,6 +3,7 @@
 namespace ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Subject
@@ -25,6 +26,8 @@ class Subject
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="100")
      */
     private $title;
 
@@ -32,6 +35,7 @@ class Subject
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Length(min="100")
      */
     private $content;
 
