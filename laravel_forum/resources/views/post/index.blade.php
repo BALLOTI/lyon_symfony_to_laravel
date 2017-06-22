@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+
+@section('css')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
+@endsection
+
+
+
 @section('content')
 
     <h1><i class="material-icons">book</i> Liste des posts</h1>
@@ -9,9 +17,9 @@
     @forelse ($posts as $post)
         <div class="card">
             <div class="card-content">
-        <h4 class="blue-text">{{ $post->title }}</h4>
+        <h4 class="blue-text">{{ ucfirst($post->title) }}</h4>
                 <blockquote>
-                    {{ $post->description }}
+                    {{ trim($post->description) }}
                 </blockquote>
                 <a href="{{ route('post.remove', ["id" => $post->id]) }}" class="waves-effect waves-light btn red"><i class="material-icons">delete_forever</i> Supprimer cet article</a>
             <ul class="collection with-header">
@@ -21,7 +29,7 @@
                             <a href="{{ route('comment.remove', ["id" => $comment->id]) }}" class="secondary-content">
                                 <i class="material-icons">delete</i></a>
                         @endcan
-                        {{ $comment->content }} <i>- {{ $comment->content }}</i>
+                        {{ $comment->content }} <i> - Ecris par  {{ $comment->user->name }} le {{ $comment->user->created_at }}</i>
                     </li>
                 @empty
                     <li>Aucun commentaire</li>
@@ -65,6 +73,19 @@
     <div class="row">
         <a href="{{ route('post.create') }}" class="waves-effect waves-light btn btn-large  green large"><i class="material-icons">add</i> Créee un article</a>
     </div>
+
+
+    <div class="card blue">
+        <div class="card-content">
+            <h1>Les 5 derniers commentaires</h1>
+            @foreach($lastComm as $comm)
+                <p>{{ $comm->content }}</p>
+
+            @endforeach
+        </div>
+    </div>
+
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Service\Forum;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -16,11 +17,9 @@ class PostController extends Controller
 
 
 
-    public function index(){
+    public function index(Forum $forum){
 
-        //exit(dump($forum->))
-
-        return view('post.index', ['posts' => Post::all()]);
+        return view('post.index', ['posts' => Post::all(), 'lastComm' => $forum->getLastFiveComments()]);
 
     }
     public function create()
