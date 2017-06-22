@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', 'PostController@index')->name('postindex');
+Route::get('/', 'PostController@index')->name('postindex')->middleware('auth');
 
 
 Route::group(['prefix' => 'post', 'as' => 'post.'], function(){
@@ -20,15 +20,12 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function(){
     Route::get('/show/{id}', 'PostController@show')->name('show');
     Route::get('/create', 'PostController@create')->name('create');
     Route::post('/store', 'PostController@store')->name('store');
-
-    Route::any('/update/{id}', 'PostController@update')->name('update');
     Route::get('/remove/{id}', 'PostController@remove')->name('remove');
 });
 
 Route::group(['prefix' => 'comment', 'as' => 'comment.'], function(){
     Route::post('/create', 'CommentController@create')->name('create');
     Route::get('/remove/{id}', 'CommentController@remove')->name('remove')->middleware('can:remove,id');
-
 });
 
 

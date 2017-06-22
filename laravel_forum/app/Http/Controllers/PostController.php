@@ -14,7 +14,11 @@ use Validator;
 class PostController extends Controller
 {
 
+
+
     public function index(){
+
+        //exit(dump($forum->))
 
         return view('post.index', ['posts' => Post::all()]);
 
